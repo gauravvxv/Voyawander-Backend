@@ -4,7 +4,8 @@ const {contactController} = require("./Routes/contact.route")
 const {travellerController} = require("./Routes/traveller.route")
 const connection = require("./config/db")
 const app = express();
-const PORT = 8000;
+const PORT = process.env.PORT;
+require("dotenv").config();
 
 app.use(express.json())
 
