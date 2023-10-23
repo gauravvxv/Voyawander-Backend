@@ -32,7 +32,7 @@ navigate('/login')
       password: password
     }
 try {
-  const api  = await axios.post(`https://prickly-cod-fedora.cyclic.app/signup`,data);
+  const api  = await axios.post(`https://weak-plum-pike-boot.cyclic.app/signup`,data);
   alert("signup successful")
   console.log(api);
 } catch (error) {

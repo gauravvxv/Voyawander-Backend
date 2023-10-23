@@ -32,7 +32,7 @@ export const Login = () => {
       }
 
     try {
-      const api = await axios.post(`https://prickly-cod-fedora.cyclic.app/login`, data);
+      const api = await axios.post(`https://weak-plum-pike-boot.cyclic.app/login`, data);
       console.log(api.data)
       setError(api.data)
       console.log(api.data.token)

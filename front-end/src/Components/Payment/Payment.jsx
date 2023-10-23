@@ -138,16 +138,12 @@ function Payment() {
 
   const apiData = async() => {
 try {
-  const api = await axios.post(`https://prickly-cod-fedora.cyclic.app/travellerdetails`,formdata);
+  const api = await axios.post(`https://weak-plum-pike-boot.cyclic.app/travellerdetails`,formdata);
   console.log(api)
 } catch (error) {
   console.log(error)
 }
   }
-
-  useEffect(()=>{
-    apiData();
-  },[])
 
   return (
     <Box
@@ -1333,6 +1329,7 @@ try {
                             isClosable: true,
                           });
                         } else {
+                          apiData()
                           onOpen();
                           toast({
                             title: "5637",
