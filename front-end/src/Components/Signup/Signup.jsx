@@ -2,43 +2,43 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase";
+import axios from "axios"
 import Style from "../Signup/Signup.module.css";
 import { useSelector } from "react-redux";
 import logo from "../../Images/logo_website.png";
 
 export const Signup = () => {
-  const [values, setvalues] = useState({
-    name: "",
-    email: "",
-    pass: "",
-  });
-  const [isError, setIserror] = useState("");
-  const [submitbutton, setSubmitButton] = useState(false);
+const [name,setName] = useState('');
+const [email,setEmail] = useState('');
+const [password,setPassword] = useState('');
+const [isError,setError] = useState("");
 
-  const navigate = useNavigate();
 
-  const isAuth = useSelector((state) => state.auth);
-  console.log(isAuth);
-  if (isAuth.isAuth) {
-    navigate("/");
-  }
+const navigate = useNavigate();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  const handlesubmit = () => {
-    if (!values.name || !values.email || !values.pass) {
-      setIserror("Please Fill All Fields");
-      return;
+    if(!name||! email|| !password){
+  setError("Please fill in all fields.");
+  return
+}
+else{
+navigate('/login')
+}
+
+    const data = {
+      name: name,
+      email: email,
+      password: password
     }
-    setIserror("");
-    setSubmitButton(true);
-    createUserWithEmailAndPassword(auth, values.email, values.pass)
-      .then(async (res) => {
-        setSubmitButton(false);
-        console.log(res);
-        navigate("/login");
-      })
-      .catch((error) => setIserror(error.message), setSubmitButton(false));
-    console.log(values);
-  };
+try {
+  const api  = await axios.post(`https://prickly-cod-fedora.cyclic.app/signup`,data);
+  alert("signup successful")
+  console.log(api);
+} catch (error) {
+  console.log(error)
+}
+  }
 
   return (
     <div className={Style.container}>
@@ -50,14 +50,14 @@ export const Signup = () => {
             with Us!
           </p>
         </div>
+          <form onSubmit={handleSubmit}>
         <div>
           <input
             className={Style.input}
             type="text"
             placeholder="Enter Your Name"
-            onChange={(e) =>
-              setvalues((prev) => ({ ...prev, name: e.target.value }))
-            }
+            value={name}
+         onChange={(e)=>setName(e.target.value)}
           />
         </div>
         <br />
@@ -66,9 +66,8 @@ export const Signup = () => {
             className={Style.input}
             type="email"
             placeholder="Enter Your Email"
-            onChange={(e) =>
-              setvalues((prev) => ({ ...prev, email: e.target.value }))
-            }
+            value={email}
+            onChange={(e)=>setEmail(e.target.value)}
           />
         </div>
         <br />
@@ -77,9 +76,8 @@ export const Signup = () => {
             className={Style.input}
             type="password"
             placeholder="Enter Your Password"
-            onChange={(e) =>
-              setvalues((prev) => ({ ...prev, pass: e.target.value }))
-            }
+            value={password}
+         onChange={(e)=>setPassword(e.target.value)}
           />
         </div>
         <br />
@@ -88,10 +86,11 @@ export const Signup = () => {
         </div>
         <button
           className={Style.btn}
-          onClick={handlesubmit}
-          disabled={submitbutton}>
+          type="submit"
+          >
           Sign up
         </button>
+            </form>
         <p>
           Already have an account?
           <span>

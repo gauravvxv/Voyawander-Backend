@@ -26,6 +26,7 @@ import {
 import React, { useContext, useEffect, useState } from "react";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { AiFillCheckCircle, AiFillTag } from "react-icons/ai";
+import axios from "axios";
 import {
   BsFill1SquareFill,
   BsFill2SquareFill,
@@ -132,6 +133,21 @@ function Payment() {
     const rzp1 = new window.Razorpay(options);
     rzp1.open();
   };
+
+
+
+  const apiData = async() => {
+try {
+  const api = await axios.post(`https://prickly-cod-fedora.cyclic.app/travellerdetails`,formdata);
+  console.log(api)
+} catch (error) {
+  console.log(error)
+}
+  }
+
+  useEffect(()=>{
+    apiData();
+  },[])
 
   return (
     <Box
@@ -1420,6 +1436,7 @@ function Payment() {
                           </Text>
                           <Text
                             onClick={() => {
+                           
                               toast({
                                 description: "Your OTP is 5637",
                                 status: "warning",

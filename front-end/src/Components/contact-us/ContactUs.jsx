@@ -4,17 +4,28 @@ import axios from "axios";
 
 function ContactUs() {
   const [isLoading, setIsLoading] = useState(false);
-  const [formData, setformdata] = useState({
-    email: "",
-    phone: "",
-    message: "",
-  });
-
-  const handleOnChange = (e) => {
-    setformdata((prev) => {
-      return { ...prev, [e.target.name]: e.target.value };
-    });
-  };
+  const [email,setEmail] = useState('');
+  const [mobile,setMobile] = useState();
+  const [message,setMeassage] = useState('');
+  
+    const handleOnChange = async (e) => {
+     e.preventDefault();
+  
+     const data = {
+      email: email,
+      mobile: mobile,
+      message: message
+     }
+  
+    try {
+      const api = await axios.post(`https://zany-cyan-bullfrog-cap.cyclic.app/contactus`,data);
+      console.log(api);
+      alert(api.data)
+    } catch (error) {
+  console.log(error)    
+    }
+  
+  }
 
   return (
     <div className={`${styles.third_section} ${styles.fifth_section}`}>
@@ -38,40 +49,24 @@ function ContactUs() {
         make your travelk dreams a reality.
       </p>
       <div className={styles.contact_form}>
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            setIsLoading(true);
-            axios
-              .post(
-                `https://https://voyawander-json-szvk.onrender.com/contact`,
-                formData
-              )
-              .then((res) => {
-                alert("Message added!");
-                setIsLoading(false);
-              })
-              .catch((er) => {
-                alert("Some error occured!");
-                setIsLoading(false);
-              });
-          }}>
+        <form onSubmit={handleOnChange}>
           <div>
             <input
-              onChange={handleOnChange}
+              onChange={(e)=>setEmail(e.target.value)}
               type="email"
+              value={email}
               name="email"
               placeholder="Email"
             />
             <input
-              onChange={handleOnChange}
+              onChange={(e)=>setMobile(e.target.value)}
               name="phone"
               type="phone"
               placeholder="Mobile"
             />
           </div>
           <input
-            onChange={handleOnChange}
+            onChange={(e)=>setMeassage(e.target.value)}
             name="message"
             type="text"
             placeholder="Message"

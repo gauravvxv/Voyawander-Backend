@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 
 const travellerSchema = mongoose.Schema({
-    title: {type: String,required: true},
     first_N: {type: String,required: true},
     last_N: {type: String,required: true},
     email: {type: String,required: true},
